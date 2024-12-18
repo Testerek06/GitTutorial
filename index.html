@@ -12,19 +12,19 @@
             height: 100vh;
             flex-direction: column;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #000000;
             margin: 0;
         }
-        .question {
+        .question, .follow-up, .message, .name-question, .mid-question {
             font-size: 24px;
             margin-bottom: 20px;
             color: #333;
         }
-        .buttons {
+        .buttons, .follow-up-buttons, .back-button, .name-input, .mid-buttons {
             display: flex;
             gap: 10px;
         }
-        .buttons button {
+        .buttons button, .follow-up-buttons button, .back-button button, .name-input button, .mid-buttons button {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #007BFF;
@@ -33,7 +33,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .buttons button:hover {
+        .buttons button:hover, .follow-up-buttons button:hover, .back-button button:hover, .name-input button:hover, .mid-buttons button:hover {
             background-color: #0056b3;
         }
         .message {
@@ -41,21 +41,112 @@
             font-size: 24px;
             color: green;
         }
+        .name-question, .mid-question, .follow-up, .follow-up-buttons, .back-button, .question, .buttons, .mid-buttons {
+            display: none;
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+        .back-button button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button button:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
+    <div class="name-question">What's your name?</div>
+    <div class="name-input">
+        <input type="text" id="name" placeholder="Enter your name" style="padding: 10px; font-size: 16px;">
+        <button onclick="submitName()">Send</button>
+    </div>
+    <div class="mid-question" id="mid-question"></div>
+    <div class="mid-buttons">
+        <button onclick="proceedToNextQuestion()">Yes</button>
+    </div>
     <div class="question">Are You happy?</div>
     <div class="buttons">
-        <button onclick="showMessage()">Yes</button>
-        <button onclick="alert('You clicked No!')">No</button>
+        <button onclick="showMessage('KEEP DOING WHATEVER YOU\'RE DOING')">Yes</button>
+        <button onclick="showFollowUp()">No</button>
     </div>
-    <div class="message">KEEP DOING WHATEVER YOU'RE DOING</div>
+    <div class="message" id="message"></div>
+    <div class="back-button" id="message-back">
+        <button onclick="goBackToFirstQuestion()">Back</button>
+    </div>
+    <div class="follow-up">Do You want to be happy?</div>
+    <div class="follow-up-buttons">
+        <button onclick="showFollowUpMessage('CHANGE SOMETHING')">Yes</button>
+        <button onclick="showFollowUpMessage('KEEP DOING WHATEVER YOU\'RE DOING')">No</button>
+    </div>
+    <div class="back-button" id="follow-up-back">
+        <button onclick="goBackToFirstQuestion()">Back</button>
+    </div>
 
     <script>
-        function showMessage() {
+        function submitName() {
+            const name = document.getElementById('name').value;
+            if (name) {
+                document.querySelector('.name-question').style.display = 'none';
+                document.querySelector('.name-input').style.display = 'none';
+                const midQuestion = document.getElementById('mid-question');
+                midQuestion.style.display = 'block';
+                midQuestion.textContent = name + ", can I ask you an important question?";
+                document.querySelector('.mid-buttons').style.display = 'flex';
+            } else {
+                alert('Please enter your name.');
+            }
+        }
+
+        function proceedToNextQuestion() {
+            document.querySelector('.mid-question').style.display = 'none';
+            document.querySelector('.mid-buttons').style.display = 'none';
+            document.querySelector('.question').style.display = 'block';
+            document.querySelector('.buttons').style.display = 'flex';
+        }
+
+        function showMessage(text) {
             document.querySelector('.question').style.display = 'none';
             document.querySelector('.buttons').style.display = 'none';
-            document.querySelector('.message').style.display = 'block';
+            document.querySelector('.follow-up').style.display = 'none';
+            document.querySelector('.follow-up-buttons').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').textContent = text;
+            document.getElementById('message-back').style.display = 'flex';
+            document.getElementById('follow-up-back').style.display = 'none';
+        }
+
+        function showFollowUp() {
+            document.querySelector('.question').style.display = 'none';
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('.follow-up').style.display = 'block';
+            document.querySelector('.follow-up-buttons').style.display = 'flex';
+            document.getElementById('follow-up-back').style.display = 'flex';
+        }
+
+        function showFollowUpMessage(text) {
+            document.querySelector('.follow-up').style.display = 'none';
+            document.querySelector('.follow-up-buttons').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').textContent = text;
+            document.getElementById('message-back').style.display = 'flex';
+            document.getElementById('follow-up-back').style.display = 'none';
+        }
+
+        function goBackToFirstQuestion() {
+            document.querySelector('.question').style.display = 'block';
+            document.querySelector('.buttons').style.display = 'flex';
+            document.querySelector('.follow-up').style.display = 'none';
+            document.querySelector('.follow-up-buttons').style.display = 'none';
+            document.getElementById('message').style.display = 'none';
+            document.getElementById('message-back').style.display = 'none';
+            document.getElementById('follow-up-back').style.display = 'none';
         }
     </script>
 </body>
