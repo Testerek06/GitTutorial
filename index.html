@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Pierwsza Strona</title>
+    <title>Question</title>
     <style>
         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
             font-family: Arial, sans-serif;
-            margin: 40px;
-            padding: 0;
             background-color: #f0f0f0;
+            margin: 0;
         }
-        h1 {
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #333;
         }
-        p {
-            color: #666;
+        .buttons {
+            display: flex;
+            gap: 10px;
         }
-        button {
+        .buttons button {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #007BFF;
@@ -26,14 +33,30 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover {
+        .buttons button:hover {
             background-color: #0056b3;
+        }
+        .message {
+            display: none;
+            font-size: 24px;
+            color: green;
         }
     </style>
 </head>
 <body>
-    <h1>Witaj na mojej stronie!</h1>
-    <p>To jest przykładowa strona HTML, która służy do nauki podstaw GitHub.</p>
-    <button onclick="alert('Witaj, świecie!')">Kliknij mnie</button>
+    <div class="question">Are You happy?</div>
+    <div class="buttons">
+        <button onclick="showMessage()">Yes</button>
+        <button onclick="alert('You clicked No!')">No</button>
+    </div>
+    <div class="message">KEEP DOING WHATEVER YOU'RE DOING</div>
+
+    <script>
+        function showMessage() {
+            document.querySelector('.question').style.display = 'none';
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('.message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
